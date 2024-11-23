@@ -1,0 +1,18 @@
+[
+  /* reserva general*/
+  {
+    "id": "1",
+    "movie": {"movie": "movie"},
+    "date": "date",
+    "hour": "hour",
+    "asientosDisponibles": ["fila", "columna", "disponible"]
+  },
+  /* reserva particular */
+  {
+    "id": "1",
+    "user": "user",
+    "date": "date",
+    "time": "time",
+    "asientosElegidos": ["fila", "columna"]
+  }
+]
