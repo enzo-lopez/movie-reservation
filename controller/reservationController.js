@@ -30,7 +30,7 @@ export class ReservationController {
     }
 
     // Si fue exitosa, tambien la agregamos a la lista de reservas del user
-    const user = await User.findOne({_id: reservation.user})
+    const user = await User.findOne({_id: reservation.user}) // falta aagregar este a model
     user.reservation.push(newUserReservation._id)
     await user.save()
 
@@ -38,5 +38,26 @@ export class ReservationController {
       message: 'Reserva hecha correctamente',
       reserva: await newUserReservation.populate('movie'),
     })
+  }
+
+  getUserReservations = async (req, res) => { //falta terminar
+    const userId = req.user.id
+
+    const userReservations = this.ReservationModel.getUserReservations // falta el await
+    res.status(201).json({user: userId, reservations: userReservations})
+  }
+
+  getAllReservations = async (req, res) => { //falta await
+    const allRervations = this.ReservationModel.getAllReservations
+    res.status(201).json({Reservations: allRervations})
+  }
+
+  delete = async (req, res) => {
+    const {id} = req.params
+    const result = await this.ReservationModel.delete({id})
+    if(result.error){
+      return res.status(400).json({error: result.error})
+    }
+    res.json({message: result.message})
   }
 }

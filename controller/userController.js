@@ -9,7 +9,7 @@ export class UserController {
   }
 
   register = async (req, res) => {
-    const {username, email, password} = req.body
+    const {username, email, role, password} = req.body
 
     try {
       const salt = await bcrypt.genSalt(10)
@@ -18,6 +18,7 @@ export class UserController {
       const user = await this.UserModel.register({
         username,
         email,
+        role,
         password: hashed,
       })
       // Hay que quitar que muestre al usuario
@@ -45,7 +46,7 @@ export class UserController {
       }
 
       // Generar token
-      const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
+      const token = jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
       })
 

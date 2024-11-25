@@ -6,7 +6,7 @@ export const userRouter = () => {
 
   const userController = new UserController()
 
-  router.post('/login')
+  router.post('/login', userController.login)
   router.post('/register', userController.register)
 
   return router

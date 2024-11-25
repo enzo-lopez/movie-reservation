@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
     match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   },
   password: {type: String, required: true, minLength: 6},
+  role: {type: String, required: true, default: 'USER'},
   reservation: [{type: mongoose.Schema.Types.ObjectId, ref: 'userReservation'}],
 })
 

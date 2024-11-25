@@ -13,4 +13,16 @@ const cinemaRoomSchema = new mongoose.Schema({
   seats: {type: [seatSchema], required: true}, // Lista de asientos
 })
 
+
+export const generateSeats = () => {
+  const rows = ['A', 'B', 'C']
+  const seats = []
+  rows.forEach(row => {
+    for(let numberSeat = 1; numberSeat <= 8; numberSeat++) {
+      seats.push({row, numberSeat, isAvaible: true})
+    }
+  })
+  return seats
+}
+
 export const CinemaRoom = mongoose.model('cinemaRoom', cinemaRoomSchema)

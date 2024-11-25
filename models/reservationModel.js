@@ -17,4 +17,26 @@ export class ReservationModel {
       return {error: 'Error al crear reserva de entradas :('}
     }
   }
+
+  static async getUserReservations({userId}){
+    return await UserReservation.find({user: userId})
+  }
+
+  static async getAllReservations(){
+    return await UserReservation.find()
+  }
+
+  static async delete({id}){
+    try {
+      const reservation = await UserReservation.findById({id})
+      await reservation.deleteOne()
+      return {
+        message: 'Reservation deleted successfully'
+      }
+    } catch (error) {
+      return {
+        error: 'An error ocurred while delete the reservation'
+      }
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import {Router} from 'express'
 import {ReservationController} from '../controller/reservationController.js'
+import { authenticateToken } from '../middlewares/authenticateToken.js'
+import { isAdmin } from '../middlewares/isAdmin.js'
 
 export const reservationRouter = () => {
   const router = Router()
@@ -7,11 +9,12 @@ export const reservationRouter = () => {
   const reservationController = new ReservationController()
 
   router.post('/', reservationController.createUserReservation)
-  router.get('/')
+  // falta testear
+  router.get('/', reservationController.getUserReservations)
 
-  // Admin
-  router.get('/all')
-  router.delete('/:id')
+  // Admin, falta testear
+  router.get('/all', authenticateToken, isAdmin, reservationController.getAllReservations)
+  router.delete('/:id', authenticateToken, isAdmin, reservationController.delete)
 
   return router
 }

@@ -1,8 +1,8 @@
 import {User} from '../schemas/userSchema.js'
 
 export class UserModel {
-  static async register({username, email, password}) {
-    const newUser = new User({username, email, password})
+  static async register({username, email, role,  password}) {
+    const newUser = new User({username, email, role, password})
     await newUser.save()
     return newUser
   }
