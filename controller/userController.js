@@ -18,6 +18,7 @@ export class UserController {
       const user = await this.UserModel.register({
         username,
         email,
+        role: 'USER',
         password: hashed,
       })
       // Hay que quitar que muestre al usuario
@@ -35,19 +36,21 @@ export class UserController {
     const {email, password} = req.body
     try {
       const user = await this.UserModel.getUserByEmail({email})
-      if (!user.email) {
-        return status(404).json({error: 'Error, credenciales incorrectas?'})
+      if (!user) {
+        return res.status(404).json({error: 'Error, credenciales incorrectas?'})
       }
 
       const isPasswordCorrect = await bcrypt.compare(password, user.password)
       if (!isPasswordCorrect) {
-        return status(401).json({error: 'Error, credenciales incorrectas?'})
+        return res.status(401).json({error: 'Error, credenciales incorrectas?'})
       }
 
       // Generar token
-      const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-      })
+      const token = jwt.sign(
+        {id: user._id, role: user.role},
+        process.env.JWT_SECRET,
+        {expiresIn: process.env.JWT_EXPIRES_IN}
+      )
 
       res.status(200).json({token})
     } catch (error) {

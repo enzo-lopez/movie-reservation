@@ -15,8 +15,8 @@ export class MovieModel {
                 'An error occurred while fetching the movies, title not found ?',
             }
       }
-
-      return await Movies.find() // Devuelvo todas
+      // Si no hay genero devuelve todas
+      return await Movies.find()
     } catch (error) {
       return {
         error: 'An error occurred while fetching the movies',
